@@ -8,15 +8,6 @@ import Bronce from '../assets/medallas/OPFBronce.png';
 
 const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSS80-GOI4CzYSU93h6tAARle7NjcbZGz-YVuArz2rElPvsSj8AsDzTKwqrDy1VhsYyf7TSoKIpIDaK/pub?gid=0&single=true&output=csv';
 
-const response = await fetch(SHEET_URL);
-const csvContent = await response.text();
-
-const RawCal = parse(csvContent, {
-  columns: true,
-  skip_empty_lines: true,
-  cast: true 
-});
-
 // CAMBIAR A TRUE PARA PUBLICAR RESULTADOS
 const resultadosPublicados = false;
 
@@ -27,23 +18,32 @@ interface Participante {
   cal: number;
 }
 
-const ParticipantesOrdenados: Participante[] = [...RawCal].sort((a, b) => b.cal - a.cal);
+if (resultadosPublicados) {
+  const response = await fetch(SHEET_URL);
+  const csvContent = await response.text();
 
-const Medallas = [Oro, Plata, Bronce];
-const NPodio = ["1er Lugar", "2do Lugar", "3er Lugar"];
+  const RawCal = parse(csvContent, {
+    columns: true,
+    skip_empty_lines: true,
+    cast: true
+  });
 
-const podiog = ParticipantesOrdenados.slice(0, 3).map((participante, index) => ({
-  puesto: NPodio[index],
-  nombre: participante.nombre,
-  escuela: participante.escuela,
-  medalla: Medallas[index]
-}));
+  const ParticipantesOrdenados = [...RawCal].sort((a, b) => b.cal - a.cal);
 
-const GRes = ParticipantesOrdenados.slice(3).map((participante, index) => ({
-  posicion: index + 4,
-  folio: participante.folio,
-  escuela: participante.escuela,
-  resultado: participante.cal}));
+  podiog = ParticipantesOrdenados.slice(0, 3).map((participante, index) => ({
+    puesto: NPodio[index],
+    nombre: participante.nombre,
+    escuela: participante.escuela,
+    medalla: Medallas[index]
+  }));
+
+  GRes = ParticipantesOrdenados.slice(3).map((participante, index) => ({
+    posicion: index + 4,
+    folio: participante.folio,
+    escuela: participante.escuela,
+    resultado: participante.cal
+  }));
+}
 ---
 
 <Layout>

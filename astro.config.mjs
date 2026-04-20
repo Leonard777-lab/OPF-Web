@@ -5,6 +5,7 @@ import { defineConfig , fontProviders, passthroughImageService } from 'astro/con
 export default defineConfig({
   site: 'https://astronaut.github.io',
   base: '/',
+  output: 'static',
   fonts: [{
     provider: fontProviders.local(),
     name: "NewCM",
