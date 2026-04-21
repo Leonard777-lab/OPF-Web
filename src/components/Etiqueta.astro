@@ -1,0 +1,41 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+interface Props extends HTMLAttributes<'div'> {
+  colorFondo?: string;
+  colorTexto?: string;
+}
+
+const { class : className, colorFondo = "azul", colorTexto = "blanco", ...atributos } = Astro.props;
+---
+<div >
+    <p 
+      style={`background-color: var(--${colorFondo}); color: var(--${colorTexto})`}
+      class:list={[className]}
+      {...atributos}
+    >
+    <slot />
+  </p>
+</div>
+
+<style>
+    div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    p {
+      font-size: 1.3em;
+      border-radius: 40px;
+      padding: 0.6em;
+    }
+     
+    p::before {
+      content: "✦";
+    }
+
+    p::after {
+      content: "✦";
+    }
+</style>
