@@ -1,6 +1,55 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Etiqueta from '../components/Etiqueta.astro';
 ---
-
-<Layout>
+<Layout formulas={false}>
+    <section class:list={["hero","motion-fadein"]}>
+        <h1>
+          <span>Olimpiada Potosina</span><br>
+          <span class="gradiente-naranja">de Física</span>
+        </h1>
+    </section>
+    <Etiqueta href="/convocatoria">
+        Convocatoria Abierta
+    </Etiqueta>
 </Layout>
+<script>
+import { animate, inView } from "motion"
+inView(".motion-fadein", (element) => {
+  animate(
+   element,
+   { opacity: [0, 1], y: [12, 0] },
+   { duration: 0.5, easing: [0.22, 1, 0.36, 1] })
+})
+</script>
+<style>
+    section.hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 1.5rem;
+      min-height: 30vh;
+    }
+    section.hero h1 {
+      font-size: clamp(2.5rem, 10vw, 6rem);
+      width: min(50%, 90vw);
+      text-align: center;
+      line-height: 1.1;
+    }
+    .gradiente-naranja {
+        background: linear-gradient(to right, var(--naranja), var(--dorado));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    @media (max-width: 640px) {
+      section.hero {
+        padding: 0;
+      }
+      section.hero h1 {
+        width: 90%;
+      }
+    }
+</style>
