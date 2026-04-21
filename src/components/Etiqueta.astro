@@ -1,9 +1,11 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
+import type { Color } from "../config/colores";
+import { colores } from "../config/colores";
 
 interface Props extends HTMLAttributes<'a'> {
-  colorFondo?: string;
-  colorTexto?: string;
+  colorFondo?: Color;
+  colorTexto?: Color;
   href?: string;
 }
 
@@ -15,7 +17,6 @@ const Tag = href ? 'a' : 'p';
 <div>
   <Tag
     href={href || undefined}
-    style={`background-color: var(--${colorFondo}); color: var(--${colorTexto})`}
     class:list={[className,  { 'motion-hover': !!href }]}
     {...atributos}
   >
@@ -23,7 +24,7 @@ const Tag = href ? 'a' : 'p';
   </Tag>
 </div>
 
-<style>
+<style define:vars={{ colorFondo: colores[colorFondo], colorTexto: colores[colorTexto] }}>
   div {
     display: flex;
     flex-direction: column;
@@ -32,6 +33,8 @@ const Tag = href ? 'a' : 'p';
   }
 
   p, a {
+    background: var(--colorFondo);
+    color: var(--colorTexto);
     font-size: 1.3em;
     border-radius: 40px;
     padding: 0.6em;
