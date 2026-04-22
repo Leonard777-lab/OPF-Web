@@ -216,29 +216,6 @@ CSS `display: inline-block`, que ya está definida de forma global en `Layout.as
  
 El proyecto organiza la interfaz en componentes `.astro` ubicados en `src/components/`. Cada
 componente encapsula su propio HTML, CSS y JavaScript en un solo archivo.
+
+Para más información sobre qué es un componente y cuáles hemos definido en este proyecto, dirigete a [Components.md](./Components.md).
  
-El punto de entrada de todas las páginas es `Layout.astro`, que define la estructura base del
-sitio: incluye la etiqueta `<html>`, las fuentes, los estilos globales y monta los componentes
-`Nav`, `Footer` y `Formulas`. Las páginas individuales usan `Layout` como envoltorio a través
-del elemento `<slot />`, que es donde Astro inyecta el contenido de cada página.
- 
-`Layout` acepta la prop `formulas` (booleana, `true` por defecto) para controlar si se muestra
-el fondo animado de fórmulas en una página determinada:
- 
-```astro
----
-import Layout from "../layouts/Layout.astro";
----
-<Layout formulas={false}>
-  <h1>Página sin fórmulas de fondo</h1>
-</Layout>
-```
- 
-Los demás componentes disponibles son:
- 
-- **`Nav.astro`** — barra de navegación superior con el logo y los enlaces del sitio. Resalta
-  el enlace de la página activa y en pantallas pequeñas colapsa en un menú hamburguesa.
-- **`Footer.astro`** — pie de página con los iconos de redes sociales del proyecto.
-- **`Formulas.astro`** — fondo decorativo que muestra fórmulas físicas flotando y rebotando
-  en la pantalla. Guarda el estado de las posiciones en `localStorage` para que la animación
-  continúe donde se quedó al navegar entre páginas.
